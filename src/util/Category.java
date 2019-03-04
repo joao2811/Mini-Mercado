@@ -1,5 +1,8 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Category {
 
 	private Integer id_category;
@@ -40,6 +43,14 @@ public class Category {
 		return montar.toString();
 	}
 
-	
+	public List<Object> list(){
+		List<Object> list = new ArrayList<>();
+		
+		list.add(id_category);
+		list.add(categoryName);
+		list.add(categoryLevel);
+		
+		return list;
+	}
 
 }

@@ -294,7 +294,7 @@ query = connect.createStatement();
 					}
 				}
 				
-				stock.add(new Stock(query.getInt(1), query.getString(2), query.getDouble(3), query.getInt(4), query.getDouble(5), category.get(i)));
+				stock.add(new Stock(query.getInt(1), query.getString(2), query.getDouble(3), query.getInt(4), category.get(i)));
 			}
 			
 			query = comands.executeQuery("select * from purchase");
@@ -347,5 +347,31 @@ query = connect.createStatement();
 			DB.closeConnection();
 		}
 		return lines;
+	}
+
+	public static Boolean pesquisar(String query, List<Object> parameters) {
+		boolean res = false;
+		
+		try {
+			
+			Connection connect = DB.getConnection();
+			PreparedStatement comands = connect.prepareStatement(query);
+			
+			int num = 1;
+			for(Object i : parameters) {
+				comands.setObject(num, i);
+				num++;
+			}
+			
+			ResultSet table = comands.executeQuery();
+			
+			res = table.next() == true ? true : false;
+			
+		}
+		catch(Exception ex) {
+			
+		}
+		
+		return res;
 	}
 }

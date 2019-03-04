@@ -1,5 +1,8 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Stock {
 
 	private Integer id_product;
@@ -13,12 +16,12 @@ public class Stock {
 		
 	}
 	
-	public Stock(Integer id_product, String name_product, Double price_unity, Integer quantity, Double amount, Category category) {
+	public Stock(Integer id_product, String name_product, Double price_unity, Integer quantity, Category category) {
 		this.id_product = id_product;
 		this.name_product = name_product;
 		this.price_unity = price_unity;
 		this.quantity = quantity;
-		this.amount = amount;
+		this.amount = price_unity * quantity;
 		this.category = category;
 	}
 
@@ -87,5 +90,15 @@ public class Stock {
 		return montar.toString();
 	}
 	
-	
+	public List<Object> list(){
+		List<Object> lista = new ArrayList<>();
+		
+		lista.add(id_product);
+		lista.add(name_product);
+		lista.add(price_unity);
+		lista.add(quantity);
+		lista.add(category.getCategoryID());
+		
+		return lista;
+	}
 }
