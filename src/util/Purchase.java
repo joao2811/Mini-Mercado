@@ -1,13 +1,13 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Purchase {
 
 	private Integer id_purchase;
 	private Client cliente;
-	private List<Stock> produtos;
+	private Stock produtos;
 	private Integer quantity;
 	private Double amount;
 	
@@ -15,12 +15,13 @@ public class Purchase {
 		
 	}
 	
-	public Purchase(Client cliente, List<Stock> produtos) {
+	public Purchase(Integer id, Client cliente, Stock produtos, Integer Quantity) {
 		super();
+		this.id_purchase = id;
 		this.cliente = cliente;
 		this.produtos = produtos;
-		this.quantity = produtos.stream().collect(Collectors.summingInt(x -> x.getQuantity()));;
-		this.amount = produtos.stream().collect(Collectors.summingDouble(x -> x.getAmount()));
+		this.quantity = Quantity;
+		this.amount = produtos.getPrice_unity() * Quantity;
 	}
 
 	
@@ -32,7 +33,7 @@ public class Purchase {
 		return cliente;
 	}
 
-	public List<Stock> getProdutos() {
+	public Stock getProdutos() {
 		return produtos;
 	}
 
@@ -51,15 +52,28 @@ public class Purchase {
 		StringBuilder montar = new StringBuilder();
 		
 		
-		montar.append("Client: " + cliente + "\n");
+		montar.append("Client: " + cliente.getName() + "\n");
 		montar.append("====================================\n");
-		montar.append("Number Of Products On Purchase: " + produtos.size() + "\n");
+		montar.append("Name Product: " + produtos.getName_product() + "\n");
 		montar.append("Quantity Total: " + quantity + "\n");
+		montar.append("Price Unity R$: " + String.format("%.2f %n", produtos.getPrice_unity()));
 		montar.append("Amount R$: " + String.format("%.2f %n", amount));
 		montar.append("====================================\n\n");
 		
 		
 		return montar.toString();
+	}
+	
+	public List<Object> list(){
+		List<Object> lista = new ArrayList<>();
+		
+		lista.add(id_purchase);
+		lista.add(cliente.getId_client());
+		lista.add(produtos.getId_product());
+		lista.add(quantity);
+		lista.add(amount);
+		
+		return lista;
 	}
 	
 }

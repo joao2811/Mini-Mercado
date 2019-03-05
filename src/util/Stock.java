@@ -3,6 +3,8 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.Banco;
+
 public class Stock {
 
 	private Integer id_product;
@@ -48,21 +50,29 @@ public class Stock {
 	public Integer getCategoryLevel() {
 		return category.getCategoryLevel();
 	}
+	public Category getCategory() {
+		return category;
+	}
+	
 	
 	public void setId_product(Integer id_product) {
 		this.id_product = id_product;
 	}
 
 	public void setName_product(String name_product) {
+		Banco.atualizar("update stock set Name_Product = ? where Name_Product = '" + this.name_product + "' and ID_Product = " + this.id_product, name_product);
 		this.name_product = name_product;
 	}
 
 	public void setPrice_unity(Double price_unity) {
+		Banco.atualizar("update stock set Price_Unity = ? where Name_Product = '" + this.name_product + "' and ID_Product = " + this.id_product, price_unity);
 		this.price_unity = price_unity;
 	}
 
 	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+		Banco.atualizar("update stock set Quantity = ? where Name_Product = '" + this.name_product + "' and ID_Product = " + this.id_product, (this.quantity - quantity));
+		this.quantity -= quantity;
+		setAmount(quantity * price_unity);
 	}
 
 	public void setAmount(Double amount) {

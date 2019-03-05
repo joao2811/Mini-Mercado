@@ -203,7 +203,7 @@ public class Banco {
 			
 			//===========================================Compras====================================//
 			
-query = connect.createStatement();
+			query = connect.createStatement();
 			
 			tabela = query.executeQuery("select * from stock where ID_Product = 1");
 			double v1 = 0, v2 = 0, v3 = 0;
@@ -298,19 +298,21 @@ query = connect.createStatement();
 			}
 			
 			query = comands.executeQuery("select * from purchase");
-			
+			int id1 = 1;
 			while(query.next()) {
-				for(Client i : client) {
-					List<Stock> compras = new ArrayList<>();
-					if(i.getId_client() == query.getInt(2)) {
-						for(Stock i2 : stock) {
-							if(i2.getId_product() == query.getInt(3)) {
-								compras.add(i2);
-							}
-						}
-						purchase.add(new Purchase(i, compras));
+				int id2 = 0, id3 = 0, qt = 0;
+				for(Client i1 : client) {
+					if(i1.getId_client() == query.getInt(2)) {
+						id2 = query.getInt(2) - 1;
 					}
 				}
+				for(Stock i2 : stock) {
+					if(i2.getId_product() == query.getInt(3)) {
+						id3 = i2.getId_product() - 1;
+					}
+				}
+				purchase.add(new Purchase(id1, client.get(id2), stock.get(id3), query.getInt(4)));
+				id1++;
 			}
 			
 		}
@@ -370,6 +372,27 @@ query = connect.createStatement();
 		}
 		catch(Exception ex) {
 			
+		}
+		
+		return res;
+	}
+
+	public static Boolean atualizar(String query, Object obj) {
+		boolean res = false;
+		
+		try {
+			Connection connect = DB.getConnection();
+			PreparedStatement comands = connect.prepareStatement(query);
+			
+			comands.setObject(1, obj);
+			
+			res = comands.execute();
+		}
+		catch(Exception ex) {
+			res = false;
+		}
+		finally {
+			DB.closeConnection();
 		}
 		
 		return res;

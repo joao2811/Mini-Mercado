@@ -35,10 +35,11 @@ public class Category {
 	public String toString() {
 		StringBuilder montar = new StringBuilder();
 		
+		montar.append("Category " + id_category + "#: \n");
 		montar.append("======================================\n");
 		montar.append("Category Name: " + categoryName + "\n");
 		montar.append("Category Level: " + categoryLevel + "\n");
-		montar.append("======================================\n");
+		montar.append("======================================\n\n");
 		
 		return montar.toString();
 	}
